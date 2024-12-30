@@ -236,74 +236,89 @@ ion-icon[name="close-outline"] {
 /* CSS for prompt */
 
 .prompt-outer {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    background-color: rgba(32, 49, 91, 0.9);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
+    align-items: center;
+    flex-flow: column;
+    box-shadow: inset 72px 10px 97px -52px rgba(12, 214, 97, 0.6);
+}
+.prompt {
+    width: 92%;
+}
+
+.prompt-outer > .prompt-heading > span {
+    color: var(--green-color);
 }
 
 .prompt-heading {
-    display: flex;
+    display: inline-flex;
+    justify-content: center;
     align-items: center;
-    color: white;
-    font-size: 1.5em;
-    margin-bottom: 15px;
-}
-
-.prompt {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    font-size: 16pt;
+    font-weight: bold;
+    position: relative;
+    top: 0;
+    left: 4%;
+    margin-top: 4px;
+    align-self: flex-start;
 }
 
 .username-input,
 .room-id-input {
-    margin-bottom: 15px;
+    margin-top: 1vh;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
 }
 
-label {
-    color: lightgray;
-    margin-bottom: 5px;
-    font-weight: bold;
+.username-input > span,
+.room-id-input > span {
+    align-self: flex-start;
+    font-weight: 600;
+    font-size: 12pt;
 }
 
-input {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: white;
-    font-size: 1em;
-    transition: background-color 0.3s;
+ion-icon[name="terminal-outline"] {
+    color: var(--green-color);
 }
 
-input:focus {
-    background-color: rgba(255, 255, 255, 0.4);
-    outline: none;
+.room-id-input {
+    margin-top: 1%;
 }
 
 .submit-btn {
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #60c689;
-    color: white;
-    font-size: 1.1em;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    display: block;
+    margin-top: 2vh;
+    margin-bottom: 2%;
+    outline: none;
+    background: rgba(96, 198, 137, 0.5);
+    padding: 5px;
+    border-radius: 6px;
+    color: var(--green-color);
+    border: 1px solid var(--green-color);
+    font-size: 12pt;
+    font-weight: bold;
 }
 
-.submit-btn:hover {
-    background-color: #4bbf6a;
+/* As outer-prompt's width is 88% of 100vw i.e. 88vw. Therefore, the width of prompt which is 92% of outer-prompt's width will be 92/100 * 88vw = 80.96vw ~ 80 vw; */
+
+.username-input > input,
+.room-id-input > input {
+    width: 80.96vw;
+    margin-top: 4px;
+    padding: 6px;
+    outline: none;
+    border: 1px solid #f8f8f8;
+    background-color: var(--elem-bg-color);
+    color: var(--elem-text-color);
+    transition: all 0.5s;
+    border-radius: 6px;
+    font-size: 11pt;
+}
+
+.username-input > input:focus,
+.room-id-input > input:focus {
+    border: 2px solid var(--green-color);
 }
 
 @font-face {
@@ -384,28 +399,20 @@ main {
     width: 96%;
     color: white;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: 10px;
-    margin: 20px;
+    grid-template-columns: repeat(5, 20%);
+    grid-template-rows: repeat(6, 14%);
 }
 .cells,
 .cell-dummy {
-    display: flex;
+    display: inline-flex;
     justify-content: center;
     align-items: center;
-    border: 2px solid #ff0b6ad1;
-    font-size: 2em;
-    background-color: rgba(255, 255, 255, 0.1);
-    transition: background-color 0.3s;
+    border: 1px solid #ff0b6ad1;
+    font-size: 4.5vmin;
 }
 
 .cells {
     cursor: pointer;
-}
-
-.cells:hover {
-    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .cell-dummy.initials {
