@@ -15,7 +15,7 @@ export const gameStartingWindow = (usersRoom) => {
         if (player === host.username) {
             li.innerHTML = `${
                 Object.values(players).indexOf(player) + 1
-            }. ${player}<span class="host">(Host)</span>`;
+            }. ${player}<span class="host">(Dueño de Sala)</span>`;
         } else {
             li.innerHTML = `${
                 Object.values(players).indexOf(player) + 1
