@@ -20,6 +20,7 @@ export const rollBall = (cells, username, roomId, socket) => {
     socket.emit("is-user-host", username, roomId);
     socket.on("host-not-or-yes", (isHost) => {
         if (isHost) return;
+    socket.emit("value-send", number, variable, roomId);
     });
 
     const rollBtn = document.querySelector(".roll-ball-btn");
@@ -88,11 +89,15 @@ export const rollBall = (cells, username, roomId, socket) => {
         if (cell.textContent === number.toString()) {
             cell.style.border = "2px solid #0cd661";
             cell.addEventListener("click", () => {
+                if (cell.classList.contains("marked")) {
+                    return;
+                }
+                cell.classList.add("marked");
                 cell.style.transition = "0.5s";
                 cell.style.color = "#4BB543";
                 cell.style.border = "1px solid #FF0B6AD1";
                 cell.style.backgroundColor = "#0b0b0b";
-                cell.textContent = "X"; // Cross symbol
+                cell.textContent = "✔";
             });
         }
     });

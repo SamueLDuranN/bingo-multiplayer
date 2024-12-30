@@ -478,3 +478,12 @@ footer {
     font-weight: bold;
     font-size: 4vmin;
 }
+
+/* Estilo para las celdas marcadas */
+.cells.marked {
+    background-color: rgba(96, 198, 137, 0.5); /* Fondo diferente */
+    color: #ffffff; /* Texto blanco */
+    border: 2px solid #4BB543; /* Borde verde */
+    font-weight: bold; /* Texto en negrita */
+    transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
