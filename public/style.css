@@ -21,10 +21,10 @@
 
 body {
     background: #121212;
-    height: 100vh;
-    width: 100vw;
     font-family: "Poppins", sans-serif;
     color: #ffffff;
+    margin: 0;
+    padding: 0;
 }
 
 /* CSS for starting screen */
@@ -237,7 +237,7 @@ ion-icon[name="close-outline"] {
 /* CSS for prompt */
 
 .prompt-outer {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -422,7 +422,17 @@ main {
 }
 
 .cells {
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid #ff0b6ad1;
+    font-size: 2em;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s, border 0.3s;
+}
+
+.cells:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .cell-dummy.initials {
@@ -439,9 +449,11 @@ footer {
     font-size: 0.95em;
 }
 .number-ball-container {
-    height: 200px;
-    width: 200px;
-    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 20px 0;
 }
 .number-ball {
     background: radial-gradient(
@@ -451,18 +463,13 @@ footer {
         rgb(0, 23, 44),
         rgb(0, 0, 3)
     );
-    border: 0px;
     border-radius: 50%;
-    position: absolute;
     height: 120px;
     width: 120px;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-flow: column;
+    position: relative;
 }
 .number-ball-content {
     display: flex;
@@ -488,4 +495,24 @@ footer {
 .text {
     font-weight: bold;
     font-size: 4vmin;
+}
+
+/* Responsividad */
+@media (max-width: 600px) {
+    .prompt-outer {
+        padding: 20px;
+    }
+
+    .number-ball {
+        height: 80px;
+        width: 80px;
+    }
+
+    .number {
+        font-size: 2em;
+    }
+
+    .submit-btn {
+        font-size: 1em;
+    }
 }
