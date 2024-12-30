@@ -384,20 +384,28 @@ main {
     width: 96%;
     color: white;
     display: grid;
-    grid-template-columns: repeat(5, 20%);
-    grid-template-rows: repeat(6, 14%);
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 10px;
+    margin: 20px;
 }
 .cells,
 .cell-dummy {
-    display: inline-flex;
+    display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #ff0b6ad1;
-    font-size: 4.5vmin;
+    border: 2px solid #ff0b6ad1;
+    font-size: 2em;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s;
 }
 
 .cells {
     cursor: pointer;
+}
+
+.cells:hover {
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 .cell-dummy.initials {
