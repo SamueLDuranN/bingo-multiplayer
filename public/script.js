@@ -54,42 +54,9 @@ resultCloseBtn.addEventListener("click", () => {
     resultScreenWrapper.style.display = "none";
 });
 
-// Manejar el botón de "Ingresar como Administrador"
-document.querySelector(".admin-btn").addEventListener("click", () => {
-    document.querySelector(".prompt-outer").style.display = "none"; // Ocultar el formulario de usuario
-    document.querySelector(".admin-prompt-outer").style.display = "inline-flex"; // Mostrar el formulario de administrador
-});
-
-// Manejar la solicitud de inicio de sesión de administrador
-document.querySelector(".admin-submit-btn").addEventListener("click", () => {
-    const adminUsername = document.querySelector('[name="admin-username"]').value.trim();
-    const adminPassword = document.querySelector('[name="admin-password"]').value.trim();
-
-    // Verificar credenciales de administrador
-    if (adminUsername === "VerhalenReal" && adminPassword === "verhalrial") {
-        alert("Acceso como administrador concedido.");
-        // Aquí puedes agregar la lógica para permitir la creación de salas
-        socket.emit("create-room", roomId); // Emitir evento para crear sala
-        // Ocultar el formulario de administrador
-        document.querySelector(".admin-prompt-outer").style.display = "none";
-        // Mostrar la interfaz del juego o redirigir al usuario a la sala
-        // Puedes agregar aquí la lógica para mostrar la sala o el juego
-    } else {
-        alert("Credenciales de administrador incorrectas.");
-    }
-});
-
-// Manejar la solicitud de inicio de sesión normal
+// Handle the submission of the prompt
 document.querySelector(".submit-btn").addEventListener("click", () => {
-    const username = document.querySelector('[name="username"]').value.trim();
-    if (!username) {
-        alert("El nombre de usuario no puede estar vacío.");
-        return;
-    }
-    // Aquí puedes agregar la lógica para enviar la solicitud de inicio de sesión
-    alert("Solicitud pendiente."); // Mensaje de solicitud pendiente
-    // Emitir la solicitud al servidor
-    socket.emit("join-room", username, roomId);
+    [username, roomId] = promptSubmit(promptOuter, startGameBtn, socket);
 });
 
 socket.on("sending-user-data", (usersRoom) => {
@@ -159,55 +126,4 @@ socket.on("regenerate-bingo-card", () => {
 socket.on("host-logout", (msg) => {
     alert(msg); // Wait for user interaction
     window.location.reload(); // Reload after alert is dismissed
-});
-
-// Escuchar el evento de anuncio de ganador
-socket.on("winner-announcement", (username) => {
-    popup(username, "¡Ha ganado el juego!"); // Usando la función popup que ya tienes
-});
-
-// Escuchar la notificación de un usuario esperando
-socket.on("user-waiting", (username) => {
-    // Mostrar la solicitud de ingreso al administrador
-    const userRequest = document.createElement("div");
-    userRequest.textContent = `${username} está esperando para unirse.`;
-    
-    const acceptButton = document.createElement("button");
-    acceptButton.textContent = "Aceptar";
-    acceptButton.onclick = () => {
-        socket.emit("accept-user", username, roomId); // Emitir evento para aceptar al usuario
-        userRequest.remove(); // Eliminar la solicitud de la interfaz
-    };
-
-    const rejectButton = document.createElement("button");
-    rejectButton.textContent = "Rechazar";
-    rejectButton.onclick = () => {
-        socket.emit("reject-user", username, roomId); // Emitir evento para rechazar al usuario
-        userRequest.remove(); // Eliminar la solicitud de la interfaz
-    };
-
-    userRequest.appendChild(acceptButton);
-    userRequest.appendChild(rejectButton);
-    document.body.appendChild(userRequest); // Agregar la solicitud a la interfaz
-});
-
-// Escuchar la notificación de que el usuario fue aceptado
-socket.on("user-accepted", (username) => {
-    alert(`${username} ha sido aceptado en la sala.`);
-});
-
-// Escuchar la notificación de que el usuario fue rechazado
-socket.on("user-rejected", (username) => {
-    alert(`${username} ha sido rechazado de la sala.`);
-});
-
-// Manejar el botón de "Iniciar Juego"
-document.querySelector(".start-game-btn").addEventListener("click", () => {
-    socket.emit("start-game", roomId); // Emitir evento para iniciar el juego
-});
-
-// Escuchar el evento de que el juego ha comenzado
-socket.on("game-started", () => {
-    // Aquí puedes agregar la lógica para mostrar la interfaz del juego
-    alert("El juego ha comenzado.");
 });

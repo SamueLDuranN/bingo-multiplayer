@@ -18,70 +18,44 @@ app.use(express.static("public"));
 
 io.on("connection", (socket) => {
     socket.on("join-room", (username, roomId) => {
-        // Verificar si la sala existe
+        // Ensure room exists or initialize it
         if (!users[roomId]) {
-            socket.emit("failed-to-join-room", username, "La sala no existe.");
-            return;
+            users[roomId] = {
+                players: {},
+                inGamePlayers: {},
+                winners: {},
+                lossers: {},
+                host: null,
+                gameStarted: false,
+            };
         }
 
         const roomData = users[roomId];
 
-        // Si el juego ya ha comenzado, no permitir unirse
+        // Prevent joining if the game has started
         if (roomData.gameStarted) {
-            socket.emit("failed-to-join-room", username, "El juego ya ha comenzado.");
+            socket.emit(
+                "failed-to-join-room",
+                username,
+                "Game has already started"
+            );
             return;
         }
 
-        // Agregar el usuario a la lista de espera
-        roomData.waitingPlayers[socket.id] = username; // Agregar a la lista de espera
+        // Join the room
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit("user-waiting", username); // Notificar a los demás jugadores
-    });
+        socket.broadcast.to(roomId).emit("joined-room", username, roomId);
 
-    socket.on("accept-user", (username, roomId) => {
-        const roomData = users[roomId];
-        const userSocketId = Object.keys(roomData.waitingPlayers).find(id => roomData.waitingPlayers[id] === username);
-        
-        if (userSocketId) {
-            // Mover al usuario de la lista de espera a la lista de jugadores
-            roomData.players[userSocketId] = username;
-            delete roomData.waitingPlayers[userSocketId]; // Eliminar de la lista de espera
-            io.to(userSocketId).emit("user-accepted", username); // Notificar al usuario que fue aceptado
-        }
-    });
-
-    socket.on("reject-user", (username, roomId) => {
-        const roomData = users[roomId];
-        const userSocketId = Object.keys(roomData.waitingPlayers).find(id => roomData.waitingPlayers[id] === username);
-        
-        if (userSocketId) {
-            io.to(userSocketId).emit("user-rejected", username); // Notificar al usuario que fue rechazado
-            delete roomData.waitingPlayers[userSocketId]; // Eliminar de la lista de espera
-        }
-    });
-
-    socket.on("create-room", (roomId) => {
-        // Verificar si el usuario ya es el host de otra sala
-        if (users[roomId]) {
-            socket.emit("room-exists", "La sala ya existe.");
-            return;
-        }
-
-        // Crear la sala y asignar el host
-        users[roomId] = {
-            players: {},
-            inGamePlayers: {},
-            winners: {},
-            lossers: {},
-            host: {
+        // Assign host if not already assigned
+        if (!roomData.host) {
+            roomData.host = {
                 socketID: socket.id,
-                username: socket.username, // Asegúrate de que el nombre de usuario esté definido
-            },
-            gameStarted: false,
-        };
-
-        socket.join(roomId);
-        socket.emit("room-created", roomId);
+                username: username,
+            };
+        }
+        // Add the player to the room
+        roomData.players[socket.id] = username;
+        roomData.inGamePlayers[socket.id] = username;
     });
 
     // Sends value gain from the host to all the users in room
@@ -138,9 +112,6 @@ io.on("connection", (socket) => {
         // Notify the room about the winner
         socket.broadcast.to(room).emit("win-notification", username);
 
-        // Notify all players about the winner
-        io.to(room).emit("winner-announcement", username);
-
         // Update the result window
         io.to(room).emit("sending-user-data", users[room]);
     });
@@ -164,7 +135,7 @@ io.on("connection", (socket) => {
             io.to(room).emit("sending-user-data", users[room]);
             io.to(room).emit("regenerate-bingo-card");
         } else {
-            console.error(`Room ${room} not found`);
+            console.error(Room ${room} not found);
         }
     });
 
@@ -202,19 +173,9 @@ io.on("connection", (socket) => {
             }
         });
     });
-
-    socket.on("start-game", (roomId) => {
-        const roomData = users[roomId];
-        if (roomData.host.socketID === socket.id) {
-            roomData.gameStarted = true;
-            io.to(roomId).emit("game-started"); // Notificar a todos que el juego ha comenzado
-        } else {
-            socket.emit("not-host", "Solo el host puede iniciar el juego.");
-        }
-    });
 });
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`Express server running on http://localhost:${PORT}`);
+    console.log(Express server running on http://localhost:${PORT});
 });

@@ -26,7 +26,7 @@
         <div class="prompt-outer">
             <div class="prompt-heading">
                 <ion-icon name="terminal-outline"></ion-icon>
-                <span>Iniciar Sesión</span>
+                <span>Registrate</span>
             </div>
             <div class="prompt">
                 <div class="username-input">
@@ -38,37 +38,16 @@
                         required
                     />
                 </div>
-                <button class="submit-btn">Enviar Solicitud</button>
-                <button class="admin-btn">Ingresar como Administrador</button>
-            </div>
-        </div>
-
-        <!-- Formulario de administrador oculto -->
-        <div class="admin-prompt-outer" style="display: none;">
-            <div class="prompt-heading">
-                <ion-icon name="terminal-outline"></ion-icon>
-                <span>Iniciar Sesión como Administrador</span>
-            </div>
-            <div class="prompt">
-                <div class="admin-username-input">
-                    <span>USUARIO ADMIN:</span>
+                <div class="room-id-input">
+                    <span>SALA ID:</span>
                     <input
-                        name="admin-username"
+                        name="room-id"
                         type="text"
-                        placeholder="Ingresa Usuario Admin"
+                        placeholder="Ingresa ID Sala"
                         required
                     />
                 </div>
-                <div class="admin-password-input">
-                    <span>CONTRASEÑA:</span>
-                    <input
-                        name="admin-password"
-                        type="password"
-                        placeholder="Ingresa Contraseña"
-                        required
-                    />
-                </div>
-                <button class="admin-submit-btn">Ingresar a la sala</button>
+                <button class="submit-btn">Enviar</button>
             </div>
         </div>
 
@@ -165,7 +144,5 @@
             src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
         ></script>
         <script src="/socket.io/socket.io.js"></script>
-        <!-- Botón para iniciar el juego, visible solo para el administrador -->
-        <button class="start-game-btn" style="display: none;">Iniciar Juego</button>
     </body>
 </html>
