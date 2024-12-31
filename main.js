@@ -112,6 +112,9 @@ io.on("connection", (socket) => {
         // Notify the room about the winner
         socket.broadcast.to(room).emit("win-notification", username);
 
+        // Notify all players about the winner
+        io.to(room).emit("winner-announcement", username);
+
         // Update the result window
         io.to(room).emit("sending-user-data", users[room]);
     });

@@ -127,3 +127,8 @@ socket.on("host-logout", (msg) => {
     alert(msg); // Wait for user interaction
     window.location.reload(); // Reload after alert is dismissed
 });
+
+// Escuchar el evento de anuncio de ganador
+socket.on("winner-announcement", (username) => {
+    popup(username, "¡Ha ganado el juego!"); // Usando la función popup que ya tienes
+});
