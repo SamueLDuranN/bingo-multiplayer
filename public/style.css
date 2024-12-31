@@ -236,93 +236,89 @@ ion-icon[name="close-outline"] {
 /* CSS for prompt */
 
 .prompt-outer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-height: 100vh; /* Ocupa toda la altura de la ventana */
-    background-color: #f9f9f9; /* Color de fondo claro */
+    align-items: center;
+    flex-flow: column;
+    box-shadow: inset 72px 10px 97px -52px rgba(12, 214, 97, 0.6);
+}
+.prompt {
+    width: 92%;
 }
 
-.prompt {
-    background-color: #ffffff; /* Fondo blanco para el formulario */
-    border-radius: 10px; /* Bordes redondeados */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    padding: 30px; /* Espaciado interno */
-    width: 90%; /* Ancho responsivo */
-    max-width: 400px; /* Ancho máximo */
-    text-align: center; /* Centrar texto */
+.prompt-outer > .prompt-heading > span {
+    color: var(--green-color);
 }
 
 .prompt-heading {
-    font-size: 26px; /* Tamaño de fuente */
-    margin-bottom: 20px; /* Espaciado inferior */
-    color: #333; /* Color del texto */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16pt;
+    font-weight: bold;
+    position: relative;
+    top: 0;
+    left: 4%;
+    margin-top: 4px;
+    align-self: flex-start;
 }
 
-.prompt label {
-    font-size: 16px; /* Tamaño de fuente */
-    color: #666; /* Color del texto */
-    margin-bottom: 5px; /* Espaciado inferior */
-    display: block; /* Asegura que las etiquetas ocupen toda la línea */
+.username-input,
+.room-id-input {
+    margin-top: 1vh;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
 }
 
-.prompt input {
-    width: 100%; /* Ancho completo */
-    padding: 12px; /* Espaciado interno */
-    border: 1px solid #ccc; /* Borde gris claro */
-    border-radius: 5px; /* Bordes redondeados */
-    margin-bottom: 20px; /* Espaciado inferior */
-    font-size: 16px; /* Tamaño de fuente */
-    transition: border-color 0.3s; /* Transición suave */
+.username-input > span,
+.room-id-input > span {
+    align-self: flex-start;
+    font-weight: 600;
+    font-size: 12pt;
 }
 
-.prompt input:focus {
-    border-color: #000; /* Cambiar el color del borde al enfocar */
-    outline: none; /* Sin contorno */
+ion-icon[name="terminal-outline"] {
+    color: var(--green-color);
 }
 
-.prompt button[type="submit-btn"] {
-    background-color: #1a1a1a; /* Fondo oscuro */
-    color: #ffffff; /* Texto blanco */
-    padding: 12px 20px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 8px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    font-size: 18px; /* Tamaño de fuente */
-    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; /* Transición suave */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra suave */
-    text-transform: uppercase; /* Texto en mayúsculas */
-    letter-spacing: 1px; /* Espaciado entre letras */
-    width: 100%; /* Ancho completo */
+.room-id-input {
+    margin-top: 1%;
 }
 
-.prompt button[type="submit"]:hover {
-    background-color: #333; /* Fondo gris oscuro al pasar el mouse */
-    transform: translateY(-2px); /* Efecto de elevación */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al pasar el mouse */
+.submit-btn {
+    display: block;
+    margin-top: 2vh;
+    margin-bottom: 2%;
+    outline: none;
+    background: rgba(96, 198, 137, 0.5);
+    padding: 5px;
+    border-radius: 6px;
+    color: var(--green-color);
+    border: 1px solid var(--green-color);
+    font-size: 12pt;
+    font-weight: bold;
 }
 
-.prompt button[type="submit"]:active {
-    transform: translateY(0); /* Restablecer la elevación al hacer clic */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra original al hacer clic */
+/* As outer-prompt's width is 88% of 100vw i.e. 88vw. Therefore, the width of prompt which is 92% of outer-prompt's width will be 92/100 * 88vw = 80.96vw ~ 80 vw; */
+
+.username-input > input,
+.room-id-input > input {
+    width: 80.96vw;
+    margin-top: 4px;
+    padding: 6px;
+    outline: none;
+    border: 1px solid #f8f8f8;
+    background-color: var(--elem-bg-color);
+    color: var(--elem-text-color);
+    transition: all 0.5s;
+    border-radius: 6px;
+    font-size: 11pt;
 }
 
-.prompt button#admin-login {
-    background-color: #f0f0f0; /* Fondo gris claro */
-    color: #000; /* Texto negro */
-    padding: 12px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    font-size: 16px; /* Tamaño de fuente */
-    margin-top: 10px; /* Espaciado superior */
-    transition: background-color 0.3s, transform 0.2s; /* Transición suave */
-}
-
-.prompt button#admin-login:hover {
-    background-color: #e0e0e0; /* Fondo gris más oscuro al pasar el mouse */
-    transform: translateY(-2px); /* Efecto de elevación */
+.username-input > input:focus,
+.room-id-input > input:focus {
+    border: 2px solid var(--green-color);
 }
 
 @font-face {
@@ -481,83 +477,4 @@ footer {
 .text {
     font-weight: bold;
     font-size: 4vmin;
-}
-
-/* Estilo general para el contenedor del formulario */
-.login-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh; /* Ocupa toda la altura de la ventana */
-    background-color: #f9f9f9; /* Color de fondo claro */
-}
-
-/* Estilo para el formulario */
-.login-form {
-    background-color: #ffffff; /* Fondo blanco para el formulario */
-    border-radius: 8px; /* Bordes redondeados */
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    padding: 20px; /* Espaciado interno */
-    width: 90%; /* Ancho responsivo */
-    max-width: 400px; /* Ancho máximo */
-}
-
-/* Estilo para el encabezado del formulario */
-.login-form h2 {
-    font-size: 24px; /* Tamaño de fuente */
-    margin-bottom: 20px; /* Espaciado inferior */
-    color: #333; /* Color del texto */
-}
-
-/* Estilo para las etiquetas */
-.login-form label {
-    font-size: 14px; /* Tamaño de fuente */
-    color: #666; /* Color del texto */
-    margin-bottom: 5px; /* Espaciado inferior */
-    display: block; /* Asegura que las etiquetas ocupen toda la línea */
-}
-
-/* Estilo para los campos de entrada */
-.login-form input {
-    width: 100%; /* Ancho completo */
-    padding: 10px; /* Espaciado interno */
-    border: 1px solid #ccc; /* Borde gris claro */
-    border-radius: 4px; /* Bordes redondeados */
-    margin-bottom: 15px; /* Espaciado inferior */
-    font-size: 16px; /* Tamaño de fuente */
-}
-
-/* Estilo para el botón de enviar */
-.login-form button[type="submit"] {
-    background-color: #000; /* Fondo negro */
-    color: #fff; /* Texto blanco */
-    padding: 10px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    font-size: 16px; /* Tamaño de fuente */
-    transition: background-color 0.3s; /* Transición suave */
-}
-
-/* Efecto hover para el botón de enviar */
-.login-form button[type="submit"]:hover {
-    background-color: #333; /* Fondo gris oscuro al pasar el mouse */
-}
-
-/* Estilo para el botón de ingresar como admin */
-.login-form button#admin-login {
-    background-color: #f0f0f0; /* Fondo gris claro */
-    color: #000; /* Texto negro */
-    padding: 10px; /* Espaciado interno */
-    border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
-    cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    font-size: 16px; /* Tamaño de fuente */
-    margin-top: 10px; /* Espaciado superior */
-}
-
-/* Efecto hover para el botón de admin */
-.login-form button#admin-login:hover {
-    background-color: #e0e0e0; /* Fondo gris más oscuro al pasar el mouse */
 }
