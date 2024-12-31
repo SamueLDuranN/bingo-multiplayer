@@ -561,7 +561,3 @@ footer {
 .login-form button#admin-login:hover {
     background-color: #e0e0e0; /* Fondo gris más oscuro al pasar el mouse */
 }
-
-.prompt button {
-    /* Estilos aquí */
-}
