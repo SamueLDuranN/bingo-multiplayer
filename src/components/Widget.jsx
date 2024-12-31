@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
 
 const socket = io();
@@ -6,6 +6,11 @@ const socket = io();
 export default function Widget() {
     const [usuario, setUsuario] = useState('');
     const [salaId, setSalaId] = useState('');
+
+    useEffect(() => {
+        // Establecer el host al cargar el componente
+        socket.emit("set-host");
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault();
