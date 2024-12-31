@@ -1,29 +1,50 @@
-// Crear un array de números del 1 al 75
-let masterArray = Array.from({ length: 75 }, (_, i) => i + 1);
+// Create an array of numbers 1-75
+let array = Array.from({ length: 75 }, (_, i) => i + 1);
 
-// Función para mezclar un array aleatoriamente
+// Function to shuffle an array randomly
 function shuffledArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]]; // Intercambiar elementos
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
     }
     return array;
 }
 
-// Función para generar un cartón único
-export const generateUniqueBingoGrid = (usedNumbers) => {
-    let availableNumbers = masterArray.filter(num => !usedNumbers.has(num)); // Filtrar números no usados
-    shuffledArray(availableNumbers); // Mezclar números disponibles
+// Function to divide the main array into groups for each letter in BINGO
+export const divideIntoGroups = () => {
+    return [
+        shuffledArray(array.slice(0, 15)), // B
+        shuffledArray(array.slice(15, 30)), // I
+        shuffledArray(array.slice(30, 45)), // N
+        shuffledArray(array.slice(45, 60)), // G
+        shuffledArray(array.slice(60, 75)), // O
+    ];
+}
 
-    let cart = availableNumbers.slice(0, 25); // Tomar los primeros 25 números
-    let cartNumbers = new Set(cart); // Almacenar los números en uso
+// Function to concatenate the first 5 elements of each group
+function arrConcat(initials) {
+    return initials[0]
+        .slice(0, 5)
+        .concat(initials[1].slice(0, 5))
+        .concat(initials[2].slice(0, 5))
+        .concat(initials[3].slice(0, 5))
+        .concat(initials[4].slice(0, 5));
+}
 
-    usedNumbers.add(...cartNumbers); // Agregar los números usados al conjunto
+// Function to calculate grid indices for vertical columns
+function IndexIncrementer() {
+    let temp = [];
+    for (let i = 0; i <= 4; i++) {
+        for (let j = 0 + i; j <= 20 + i; j += 5) {
+            temp.push(j);
+        }
+    }
+    return temp;
+}
 
-    return cart; // Devolver el cartón generado
-};
+let newIndices = IndexIncrementer(); // Calculate grid indices once
 
-// Función para crear la grilla del cartón
+// Function to create the bingo grid
 function gridMaker(arr) {
     const gameContainer = document.querySelector(".game");
     gameContainer.innerHTML = `
@@ -32,18 +53,19 @@ function gridMaker(arr) {
       <div class="cell-dummy initials">N</div>
       <div class="cell-dummy initials">G</div>
       <div class="cell-dummy initials">O</div>
-      `; // Limpiar la grilla existente
+      `; // Clear the existing grid
 
     for (let i = 0; i < arr.length; i++) {
         let cell = document.createElement("div");
         cell.classList.add("cells");
-        cell.textContent = arr[i]; // Rellenar con los datos del cartón
+        cell.textContent = arr[newIndices[i]]; // Populate with grid data
         gameContainer.appendChild(cell);
     }
 }
 
-// Función general para generar o reiniciar un cartón de Bingo
-export const generateBingoGrid = (usedNumbers) => {
-    let cart = generateUniqueBingoGrid(usedNumbers); // Generar un cartón único
-    gridMaker(cart); // Crear la grilla en la interfaz
+// General-purpose function to generate or reset the Bingo grid
+export const generateBingoGrid = () => {
+    let initials = divideIntoGroups(); // Divide into B, I, N, G, O groups
+    let arr = arrConcat(initials); // Create concatenated array for the grid
+    gridMaker(arr); // Generate the grid
 };
