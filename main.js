@@ -3,11 +3,11 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-dotenv.config(); // Load environment variables
+dotenv.config(); // Cargar variables de entorno
 
 const app = express();
-const server = createServer(app); // Create HTTP server
-const io = new Server(server); // Initialize Socket.IO with the HTTP server
+const server = createServer(app); // Crear servidor HTTP
+const io = new Server(server); // Inicializar Socket.IO con el servidor HTTP
 
 let users = {}; // Almacena la información de las salas y jugadores
 
@@ -31,7 +31,7 @@ io.on("connection", (socket) => {
 
         const roomData = users[roomId];
 
-        // Prevent joining if the game has started
+        // Prevenir unirse si el juego ya ha comenzado
         if (roomData.gameStarted) {
             socket.emit("failed-to-join-room", username, "El juego ya ha comenzado.");
             return;
@@ -67,7 +67,7 @@ io.on("connection", (socket) => {
 
     socket.on("start-game", (roomId) => {
         const roomData = users[roomId];
-        if (roomData.host.socketID === socket.id) {
+        if (roomData.host && roomData.host.socketID === socket.id) {
             roomData.gameStarted = true;
             io.to(roomId).emit("game-started"); // Notificar a todos que el juego ha comenzado
         } else {
@@ -83,7 +83,7 @@ io.on("connection", (socket) => {
             if (roomData.players[socket.id]) {
                 delete roomData.players[socket.id];
                 // Si el host se desconecta, manejar la lógica correspondiente
-                if (roomData.host.socketID === socket.id) {
+                if (roomData.host && roomData.host.socketID === socket.id) {
                     delete users[room]; // Eliminar la sala si el host se desconecta
                 }
             }

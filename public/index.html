@@ -22,7 +22,34 @@
                 <p class="alert-body">This can be changed in javascript</p>
             </div>
         </div>
-      
+        <!-- Custome Prompt HTML -->
+        <div class="prompt-outer">
+            <div class="prompt-heading">
+                <ion-icon name="terminal-outline"></ion-icon>
+                <span>Registrate</span>
+            </div>
+            <div class="prompt">
+                <div class="username-input">
+                    <span>USUARIO:</span>
+                    <input
+                        name="username"
+                        type="text"
+                        placeholder="Ingresa Usuario"
+                        required
+                    />
+                </div>
+                <div class="room-id-input">
+                    <span>SALA ID:</span>
+                    <input
+                        name="room-id"
+                        type="text"
+                        placeholder="Ingresa ID Sala"
+                        required
+                    />
+                </div>
+                <button class="submit-btn">Enviar</button>
+            </div>
+        </div>
 
         <!-- Starting screen before starting the game -->
         <div class="player-screen-wrapper">
@@ -117,6 +144,5 @@
             src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
         ></script>
         <script src="/socket.io/socket.io.js"></script>
-
     </body>
 </html>
