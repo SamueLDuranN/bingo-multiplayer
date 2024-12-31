@@ -246,21 +246,22 @@ ion-icon[name="close-outline"] {
 
 .prompt {
     background-color: #ffffff; /* Fondo blanco para el formulario */
-    border-radius: 8px; /* Bordes redondeados */
+    border-radius: 10px; /* Bordes redondeados */
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
-    padding: 20px; /* Espaciado interno */
+    padding: 30px; /* Espaciado interno */
     width: 90%; /* Ancho responsivo */
     max-width: 400px; /* Ancho máximo */
+    text-align: center; /* Centrar texto */
 }
 
 .prompt-heading {
-    font-size: 24px; /* Tamaño de fuente */
+    font-size: 26px; /* Tamaño de fuente */
     margin-bottom: 20px; /* Espaciado inferior */
     color: #333; /* Color del texto */
 }
 
 .prompt label {
-    font-size: 14px; /* Tamaño de fuente */
+    font-size: 16px; /* Tamaño de fuente */
     color: #666; /* Color del texto */
     margin-bottom: 5px; /* Espaciado inferior */
     display: block; /* Asegura que las etiquetas ocupen toda la línea */
@@ -268,41 +269,50 @@ ion-icon[name="close-outline"] {
 
 .prompt input {
     width: 100%; /* Ancho completo */
-    padding: 10px; /* Espaciado interno */
+    padding: 12px; /* Espaciado interno */
     border: 1px solid #ccc; /* Borde gris claro */
-    border-radius: 4px; /* Bordes redondeados */
-    margin-bottom: 15px; /* Espaciado inferior */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-bottom: 20px; /* Espaciado inferior */
     font-size: 16px; /* Tamaño de fuente */
+    transition: border-color 0.3s; /* Transición suave */
+}
+
+.prompt input:focus {
+    border-color: #000; /* Cambiar el color del borde al enfocar */
+    outline: none; /* Sin contorno */
 }
 
 .prompt button[type="submit"] {
     background-color: #000; /* Fondo negro */
     color: #fff; /* Texto blanco */
-    padding: 10px; /* Espaciado interno */
+    padding: 12px; /* Espaciado interno */
     border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
+    border-radius: 5px; /* Bordes redondeados */
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
-    font-size: 16px; /* Tamaño de fuente */
-    transition: background-color 0.3s; /* Transición suave */
+    font-size: 18px; /* Tamaño de fuente */
+    transition: background-color 0.3s, transform 0.2s; /* Transición suave */
 }
 
 .prompt button[type="submit"]:hover {
     background-color: #333; /* Fondo gris oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Efecto de elevación */
 }
 
 .prompt button#admin-login {
     background-color: #f0f0f0; /* Fondo gris claro */
     color: #000; /* Texto negro */
-    padding: 10px; /* Espaciado interno */
+    padding: 12px; /* Espaciado interno */
     border: none; /* Sin borde */
-    border-radius: 4px; /* Bordes redondeados */
+    border-radius: 5px; /* Bordes redondeados */
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
     font-size: 16px; /* Tamaño de fuente */
     margin-top: 10px; /* Espaciado superior */
+    transition: background-color 0.3s, transform 0.2s; /* Transición suave */
 }
 
 .prompt button#admin-login:hover {
     background-color: #e0e0e0; /* Fondo gris más oscuro al pasar el mouse */
+    transform: translateY(-2px); /* Efecto de elevación */
 }
 
 @font-face {
