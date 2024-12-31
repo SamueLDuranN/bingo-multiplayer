@@ -85,6 +85,7 @@ io.on("connection", (socket) => {
             const roomData = users[room];
             if (roomData.host && roomData.host.socketID === socket.id) {
                 delete users[room]; // Eliminar la sala si el host se desconecta
+                console.log(`Sala ${room} eliminada porque el host se desconectó.`);
             }
         });
     });
