@@ -285,17 +285,24 @@ ion-icon[name="close-outline"] {
 .prompt button[type="submit"] {
     background-color: #000; /* Fondo negro */
     color: #fff; /* Texto blanco */
-    padding: 12px; /* Espaciado interno */
+    padding: 12px 20px; /* Espaciado interno */
     border: none; /* Sin borde */
     border-radius: 5px; /* Bordes redondeados */
     cursor: pointer; /* Cambia el cursor al pasar el mouse */
     font-size: 18px; /* Tamaño de fuente */
-    transition: background-color 0.3s, transform 0.2s; /* Transición suave */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s; /* Transición suave */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra suave */
 }
 
 .prompt button[type="submit"]:hover {
     background-color: #333; /* Fondo gris oscuro al pasar el mouse */
     transform: translateY(-2px); /* Efecto de elevación */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al pasar el mouse */
+}
+
+.prompt button[type="submit"]:active {
+    transform: translateY(0); /* Restablecer la elevación al hacer clic */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra original al hacer clic */
 }
 
 .prompt button#admin-login {
