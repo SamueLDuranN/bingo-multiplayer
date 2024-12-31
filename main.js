@@ -3,173 +3,85 @@ import express from "express";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
-dotenv.config(); // Load environment variables
+dotenv.config(); // Cargar variables de entorno
 
 const app = express();
-const server = createServer(app); // Create HTTP server
-/**
- * @type {import("socket.io").Server}
- */
-const io = new Server(server); // Initialize Socket.IO with the HTTP server
+const server = createServer(app); // Crear servidor HTTP
+const io = new Server(server); // Inicializar Socket.IO con el servidor HTTP
 
-let users = {};
+let users = {}; // Almacena la información de las salas y jugadores
+const HOST_USERNAME = "verhal"; // Nombre de usuario del host
 
-app.use(express.static("public"));
+app.use(express.static("public")); // Servir archivos estáticos
 
 io.on("connection", (socket) => {
+    console.log("Nuevo usuario conectado:", socket.id);
+
     socket.on("join-room", (username, roomId) => {
-        // Ensure room exists or initialize it
         if (!users[roomId]) {
             users[roomId] = {
                 players: {},
-                inGamePlayers: {},
-                winners: {},
-                lossers: {},
+                waitingPlayers: {},
                 host: null,
                 gameStarted: false,
+                cards: {}, // Almacenar los cartones de los jugadores
             };
         }
 
         const roomData = users[roomId];
 
-        // Prevent joining if the game has started
+        // Prevenir unirse si el juego ya ha comenzado
         if (roomData.gameStarted) {
-            socket.emit(
-                "failed-to-join-room",
-                username,
-                "Game has already started"
-            );
+            socket.emit("failed-to-join-room", username, "El juego ya ha comenzado.");
             return;
         }
 
-        // Join the room
+        // Si el usuario es el host, permitir la creación de la sala
+        if (username === HOST_USERNAME && !roomData.host) {
+            roomData.host = { username, socketID: socket.id };
+            socket.join(roomId);
+            socket.emit("room-created", roomId); // Notificar al host que la sala fue creada
+            console.log(`${username} ha creado la sala ${roomId}`);
+        } else if (roomData.host) {
+            // Si la sala ya tiene un host, no permitir que otros la creen
+            socket.emit("failed-to-create-room", "La sala ya tiene un host.");
+            return;
+        }
+
+        // Agregar el usuario a la lista de espera
+        roomData.waitingPlayers[socket.id] = username; // Agregar a la lista de espera
         socket.join(roomId);
-        socket.broadcast.to(roomId).emit("joined-room", username, roomId);
+        socket.broadcast.to(roomId).emit("user-waiting", username); // Notificar a los demás jugadores
 
-        // Assign host if not already assigned
-        if (!roomData.host) {
-            roomData.host = {
-                socketID: socket.id,
-                username: username,
-            };
-        }
-        // Add the player to the room
-        roomData.players[socket.id] = username;
-        roomData.inGamePlayers[socket.id] = username;
+        // Inicializar el cartón del jugador
+        roomData.cards[socket.id] = []; // Aquí puedes definir cómo se llena el cartón
     });
 
-    // Sends value gain from the host to all the users in room
-    socket.on("value-send", (num, text, room) => {
-        socket.broadcast.to(room).emit("value-recive", num, text, users[room]);
-    });
+    socket.on("mark-card", (roomId, number) => {
+        const roomData = users[roomId];
+        const playerCard = roomData.cards[socket.id];
 
-    socket.on("request-current-users", (room) => {
-        // Sends everyone including sender
-        io.to(room).emit("sending-user-data", users[room]);
-    });
-
-    socket.on("is-user-host", (username, room) => {
-        // Check if the room exists and if there is a host
-        let roomData = users[room];
-
-        if (!roomData || !roomData.host) {
-            socket.emit("host-not-or-yes", false);
-            return;
+        // Marcar el número en el cartón
+        if (!playerCard.includes(number)) {
+            playerCard.push(number);
         }
 
-        // Compare if the current user is the host
-        const isHost = roomData.host.socketID === socket.id;
-
-        // Emit back the result to the user
-        socket.emit("host-not-or-yes", isHost);
-    });
-
-    socket.on("game-started", (room) => {
-        let roomData = users[room];
-        roomData.gameStarted = true;
-        socket.broadcast.to(room).emit("game-started-everyone");
-    });
-
-    socket.on("win", (username, room) => {
-        let roomData = users[room];
-        let playerId = socket.id;
-        let playerData = roomData.inGamePlayers[playerId];
-
-        // Add the winning player to the winners list
-        roomData.winners[playerId] = playerData;
-        delete roomData.inGamePlayers[playerId];
-
-        // Check if only one player is left
-        if (Object.keys(roomData.inGamePlayers).length === 1) {
-            // Transfer the last player to lossers
-            let lastPlayerId = Object.keys(roomData.inGamePlayers)[0];
-            roomData.lossers[lastPlayerId] =
-                roomData.inGamePlayers[lastPlayerId];
-            delete roomData.inGamePlayers[lastPlayerId];
-            io.to(room).emit("game-ended", roomData);
-        }
-
-        // Notify the room about the winner
-        socket.broadcast.to(room).emit("win-notification", username);
-
-        // Update the result window
-        io.to(room).emit("sending-user-data", users[room]);
-    });
-
-    socket.on("is-winner", (username, room) => {
-        const { winners } = users[room];
-        let isWinner = false
-        // Check if the current socket.id is in the winners object
-        if (Object.keys(winners).includes(socket.id)) {
-            isWinner = true
-        }
-        socket.emit("is-host-winner", isWinner)
-    });
-
-    socket.on("reset-game", (room) => {
-        if (users[room]) {
-            users[room].winners = {}; // Reset winners
-            users[room].lossers = {}; // Reset lossers
-
-            // Update the result window
-            io.to(room).emit("sending-user-data", users[room]);
-            io.to(room).emit("regenerate-bingo-card");
-        } else {
-            console.error(`Room ${room} not found`);
+        // Verificar si el jugador ha llenado el cartón
+        if (playerCard.length === 5) { // Cambia 5 por la cantidad de números necesarios para ganar
+            io.to(roomId).emit("game-ended", roomData.waitingPlayers[socket.id]); // Notificar a todos que el jugador ha ganado
+            roomData.gameStarted = false; // Finalizar el juego
         }
     });
 
+    // Manejar la desconexión del usuario
     socket.on("disconnect", () => {
-        const disconnectedUserId = socket.id;
-
-        // Iterate through rooms to check for the disconnected user
+        console.log("Usuario desconectado:", socket.id);
+        // Lógica para manejar la desconexión
         Object.keys(users).forEach((room) => {
-            if (
-                users[room].players &&
-                users[room].players[disconnectedUserId]
-            ) {
-                // Remove the disconnected user from the players list
-                delete users[room].players[disconnectedUserId];
-
-                // If there are no players left or the disconnected user is the host
-                if (
-                    Object.keys(users[room].players).length === 0 ||
-                    users[room].host.socketID === disconnectedUserId
-                ) {
-                    // If the host is disconnecting
-                    if (users[room].host.socketID === disconnectedUserId) {
-                        // Emit to all other users in the room that the host has logged out
-                        socket
-                            .to(room)
-                            .emit(
-                                "host-logout",
-                                "The host has logged out. The room will be closed."
-                            );
-
-                        // Delete the room from the users object
-                        delete users[room];
-                    }
-                }
+            const roomData = users[room];
+            if (roomData.host && roomData.host.socketID === socket.id) {
+                delete users[room]; // Eliminar la sala si el host se desconecta
+                console.log(`Sala ${room} eliminada porque el host se desconectó.`);
             }
         });
     });
@@ -177,5 +89,5 @@ io.on("connection", (socket) => {
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-    console.log(`Express server running on http://localhost:${PORT}`);
+    console.log(`Servidor Express corriendo en http://localhost:${PORT}`);
 });
