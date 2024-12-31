@@ -23,27 +23,32 @@
             </div>
         </div>
         <!-- Custome Prompt HTML -->
-        <div class="prompt-outer">
+         <!-- Custome Prompt HTML -->
+         <div class="prompt-outer">
             <div class="prompt-heading">
                 <ion-icon name="terminal-outline"></ion-icon>
                 <span>Prompt</span>
             </div>
             <div class="prompt">
-                <div class="login-container">
-                    <div class="login-form">
-                        <h2>Registrate</h2>
-                        <form onSubmit={handleSubmit}>
-                            <label htmlFor="usuario">USUARIO:</label>
-                            <input type="text" id="usuario" placeholder="Ingresa Usuario" />
-                            
-                            <label htmlFor="sala-id">SALA ID:</label>
-                            <input type="text" id="sala-id" placeholder="Ingresa ID Sala" />
-                            
-                            <button class="submit-btn">Entrar</button>
-                            <button id="admin-login">Ingresar como Admin</button>
-                        </form>
-                    </div>
+                <div class="username-input">
+                    <span>Username:</span>
+                    <input
+                        name="username"
+                        type="text"
+                        placeholder="Enter your username"
+                        required
+                    />
                 </div>
+                <div class="room-id-input">
+                    <span>Room ID:</span>
+                    <input
+                        name="room-id"
+                        type="text"
+                        placeholder="Enter Room ID"
+                        required
+                    />
+                </div>
+                <button class="submit-btn">Submit</button>
             </div>
         </div>
 
