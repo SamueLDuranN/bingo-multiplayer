@@ -13,11 +13,11 @@ function shuffledArray(array) {
 // Function to divide the main array into groups for each letter in BINGO
 export const divideIntoGroups = () => {
     return [
-        shuffledArray(array.slice(0, 75)), // B
-        shuffledArray(array.slice(0, 75)), // I
-        shuffledArray(array.slice(0, 75)), // N
-        shuffledArray(array.slice(0, 75)), // G
-        shuffledArray(array.slice(0, 75)), // O
+        shuffledArray(array.slice(0, 15)), // B
+        shuffledArray(array.slice(15, 30)), // I
+        shuffledArray(array.slice(30, 45)), // N
+        shuffledArray(array.slice(45, 60)), // G
+        shuffledArray(array.slice(60, 75)), // O
     ];
 }
 
@@ -42,16 +42,9 @@ function IndexIncrementer() {
     return temp;
 }
 
-const generateUniqueRandomNumbers = (count) => {
-    const numbers = Array.from({ length: 76 }, (_, i) => i); // Crea un array de 0 a 75
-    for (let i = numbers.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [numbers[i], numbers[j]] = [numbers[j], numbers[i]]; // Intercambiar elementos
-    }
-    return numbers.slice(0, count); // Retorna los primeros 'count' números
-};
+let newIndices = IndexIncrementer(); // Calculate grid indices once
 
-// Función para crear la cuadrícula de Bingo
+// Function to create the bingo grid
 function gridMaker(arr) {
     const gameContainer = document.querySelector(".game");
     gameContainer.innerHTML = `
@@ -60,19 +53,19 @@ function gridMaker(arr) {
       <div class="cell-dummy initials">N</div>
       <div class="cell-dummy initials">G</div>
       <div class="cell-dummy initials">O</div>
-      `; // Limpiar la cuadrícula existente
+      `; // Clear the existing grid
 
-    // Generar números aleatorios del 0 al 75
-    const uniqueNumbers = generateUniqueRandomNumbers(arr.length);
-
-    for (let i = 0; i < uniqueNumbers.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         let cell = document.createElement("div");
         cell.classList.add("cells");
-        cell.textContent = uniqueNumbers[i]; // Población con datos de la cuadrícula
+        cell.textContent = arr[newIndices[i]]; // Populate with grid data
         gameContainer.appendChild(cell);
     }
 }
 
-// Llama a gridMaker con la cantidad de números que deseas mostrar
-gridMaker(new Array(25).fill(0)); // Por ejemplo, para una cuadrícula de 5x5 
-;
+// General-purpose function to generate or reset the Bingo grid
+export const generateBingoGrid = () => {
+    let initials = divideIntoGroups(); // Divide into B, I, N, G, O groups
+    let arr = arrConcat(initials); // Create concatenated array for the grid
+    gridMaker(arr); // Generate the grid
+};
