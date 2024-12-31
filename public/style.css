@@ -282,7 +282,7 @@ ion-icon[name="close-outline"] {
     outline: none; /* Sin contorno */
 }
 
-.prompt button[type="submit"] {
+.prompt button[type="submit-btn"] {
     background-color: #1a1a1a; /* Fondo oscuro */
     color: #ffffff; /* Texto blanco */
     padding: 12px 20px; /* Espaciado interno */
@@ -294,6 +294,7 @@ ion-icon[name="close-outline"] {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Sombra suave */
     text-transform: uppercase; /* Texto en mayúsculas */
     letter-spacing: 1px; /* Espaciado entre letras */
+    width: 100%; /* Ancho completo */
 }
 
 .prompt button[type="submit"]:hover {
