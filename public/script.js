@@ -127,3 +127,14 @@ socket.on("host-logout", (msg) => {
     alert(msg); // Wait for user interaction
     window.location.reload(); // Reload after alert is dismissed
 });
+
+socket.on("game-result", (data) => {
+    const { winner, loser } = data;
+
+    // Mostrar notificación de ganador y perdedor
+    alert(`¡Felicidades ${winner}! Has ganado el juego!`);
+    alert(`Lo siento ${loser}, has perdido el juego.`);
+    
+    // Aquí puedes llamar a la función para mostrar los resultados en la interfaz
+    displayResultWindow({ winner, loser });
+});

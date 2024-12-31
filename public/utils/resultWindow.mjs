@@ -7,70 +7,34 @@ const displayInGamePlayers = (usersRoom) => {
     let host = usersRoom.host;
     inGamePlayersList.innerHTML = "";
     Object.values(inGamePlayers).forEach((inGamePlayer) => {
-        // Create a new <li> element
+        // Crear un nuevo <li> para cada jugador
         let li = document.createElement("li");
-
-        // Set the text content of the <li> element
+        li.innerHTML = `${inGamePlayer.username} - Progreso: ${inGamePlayer.progress}%`; // Muestra el progreso
         if (inGamePlayer === host.username) {
-            li.innerHTML = `${
-                Object.values(inGamePlayers).indexOf(inGamePlayer) + 1
-            }. ${inGamePlayer}<span class="host">(Host)</span>`;
-        } else {
-            li.innerHTML = `${
-                Object.values(inGamePlayers).indexOf(inGamePlayer) + 1
-            }. ${inGamePlayer}`;
+            li.innerHTML += `<span class="host">(Host)</span>`;
         }
-        // Append the <li> element to the parent list
         inGamePlayersList.appendChild(li);
     });
 };
 
 const displayWinnersList = (usersRoom) => {
-    let winners = usersRoom.winners;
-    if (winners.length === 0) return;
-    let host = usersRoom.host;
-    winnersList.innerHTML = "";
-    Object.values(winners).forEach((winner) => {
-        // Create a new <li> element
+    winnersList.innerHTML = ""; // Limpiar la lista de ganadores
+    let winner = usersRoom.winner; // Suponiendo que tienes un campo 'winner' en usersRoom
+    if (winner) {
         let li = document.createElement("li");
-
-        // Set the text content of the <li> element
-        if (winner === host.username) {
-            li.innerHTML = `${
-                Object.values(winners).indexOf(winner) + 1
-            }. <span class="winner">${winner}</span><span class="host">(Host)</span>`;
-        } else {
-            li.innerHTML = `${
-                Object.values(winners).indexOf(winner) + 1
-            }. <span class="winner">${winner}</span>`;
-        }
-        // Append the <li> element to the parent list
+        li.innerHTML = `${winner.username} - Ganador! 🎉`;
         winnersList.appendChild(li);
-    });
+    }
 };
 
 const displayLosserList = (usersRoom) => {
-    let lossers = usersRoom.lossers;
-    if (lossers.length === 0) return;
-    let host = usersRoom.host;
-    losersList.innerHTML = "";
-    Object.values(lossers).forEach((losser) => {
-        // Create a new <li> element
+    losersList.innerHTML = ""; // Limpiar la lista de perdedores
+    let loser = usersRoom.loser; // Suponiendo que tienes un campo 'loser' en usersRoom
+    if (loser) {
         let li = document.createElement("li");
-
-        // Set the text content of the <li> element
-        if (losser === host.username) {
-            li.innerHTML = `${
-                Object.values(lossers).indexOf(losser) + 1
-            }. <span class="losser">${losser}</span><span class="host">(Host)</span>`;
-        } else {
-            li.innerHTML = `${
-                Object.values(lossers).indexOf(losser) + 1
-            }. <span class="winner">${losser}</span>`;
-        }
-        // Append the <li> element to the parent list
+        li.innerHTML = `${loser.username} - Perdedor 😢`;
         losersList.appendChild(li);
-    });
+    }
 };
 
 export const displayResultWindow = (usersRoom) => {
