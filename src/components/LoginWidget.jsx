@@ -1,20 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
+
+const socket = io();
 
 export default function LoginWidget() {
     const [usuario, setUsuario] = useState('');
     const [salaId, setSalaId] = useState('');
 
     const handleAdminLogin = () => {
-        window.location.href = '/admin-login'; // Cambia esto a la URL del login de admin
+        window.location.href = '/admin-login';
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        // Aquí puedes agregar la lógica para manejar el inicio de sesión
-        console.log('Usuario:', usuario);
-        console.log('Sala ID:', salaId);
-        // Emitir evento para unirse a la sala, si es necesario
+        socket.emit('join-room', usuario, salaId);
     };
+
+    useEffect(() => {
+        socket.on('room-joined', () => {
+            window.location.href = '/game';
+        });
+
+        return () => {
+            socket.off('room-joined');
+        };
+    }, []);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen bg-background">
