@@ -173,6 +173,23 @@ io.on("connection", (socket) => {
             }
         });
     });
+
+    socket.on("mark-card", (roomId, number) => {
+        const roomData = users[roomId];
+        const playerCard = roomData.cards[socket.id];
+
+        // Marcar el número en el cartón
+        if (!playerCard.includes(number)) {
+            playerCard.push(number);
+        }
+
+        // Verificar si el jugador ha llenado el cartón
+        // Cambia la condición para verificar si el cartón está completamente lleno
+        if (playerCard.length === 25) { // Cambia 25 por la cantidad total de números en el cartón
+            io.to(roomId).emit("game-ended", roomData.waitingPlayers[socket.id]); // Notificar a todos que el jugador ha ganado
+            roomData.gameStarted = false; // Finalizar el juego
+        }
+    });
 });
 
 const PORT = process.env.PORT || 3000;
