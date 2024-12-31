@@ -29,25 +29,21 @@
                 <span>Prompt</span>
             </div>
             <div class="prompt">
-                <div class="username-input">
-                    <span>USUARIO:</span>
-                    <input
-                        name="username"
-                        type="text"
-                        placeholder="Enter your username"
-                        required
-                    />
+                <div class="login-container">
+                    <div class="login-form">
+                        <h2>Registrate</h2>
+                        <form onSubmit={handleSubmit}>
+                            <label htmlFor="usuario">USUARIO:</label>
+                            <input type="text" id="usuario" placeholder="Ingresa Usuario" />
+                            
+                            <label htmlFor="sala-id">SALA ID:</label>
+                            <input type="text" id="sala-id" placeholder="Ingresa ID Sala" />
+                            
+                            <button type="submit">Entrar</button>
+                            <button id="admin-login">Ingresar como Admin</button>
+                        </form>
+                    </div>
                 </div>
-                <div class="room-id-input">
-                    <span>SALA ID:</span>
-                    <input
-                        name="room-id"
-                        type="text"
-                        placeholder="Enter Room ID"
-                        required
-                    />
-                </div>
-                <button class="submit-btn">Entrar</button>
             </div>
         </div>
 

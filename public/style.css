@@ -478,3 +478,82 @@ footer {
     font-weight: bold;
     font-size: 4vmin;
 }
+
+/* Estilo general para el contenedor del formulario */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh; /* Ocupa toda la altura de la ventana */
+    background-color: #f9f9f9; /* Color de fondo claro */
+}
+
+/* Estilo para el formulario */
+.login-form {
+    background-color: #ffffff; /* Fondo blanco para el formulario */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: 20px; /* Espaciado interno */
+    width: 90%; /* Ancho responsivo */
+    max-width: 400px; /* Ancho máximo */
+}
+
+/* Estilo para el encabezado del formulario */
+.login-form h2 {
+    font-size: 24px; /* Tamaño de fuente */
+    margin-bottom: 20px; /* Espaciado inferior */
+    color: #333; /* Color del texto */
+}
+
+/* Estilo para las etiquetas */
+.login-form label {
+    font-size: 14px; /* Tamaño de fuente */
+    color: #666; /* Color del texto */
+    margin-bottom: 5px; /* Espaciado inferior */
+    display: block; /* Asegura que las etiquetas ocupen toda la línea */
+}
+
+/* Estilo para los campos de entrada */
+.login-form input {
+    width: 100%; /* Ancho completo */
+    padding: 10px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde gris claro */
+    border-radius: 4px; /* Bordes redondeados */
+    margin-bottom: 15px; /* Espaciado inferior */
+    font-size: 16px; /* Tamaño de fuente */
+}
+
+/* Estilo para el botón de enviar */
+.login-form button[type="submit"] {
+    background-color: #000; /* Fondo negro */
+    color: #fff; /* Texto blanco */
+    padding: 10px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    font-size: 16px; /* Tamaño de fuente */
+    transition: background-color 0.3s; /* Transición suave */
+}
+
+/* Efecto hover para el botón de enviar */
+.login-form button[type="submit"]:hover {
+    background-color: #333; /* Fondo gris oscuro al pasar el mouse */
+}
+
+/* Estilo para el botón de ingresar como admin */
+.login-form button#admin-login {
+    background-color: #f0f0f0; /* Fondo gris claro */
+    color: #000; /* Texto negro */
+    padding: 10px; /* Espaciado interno */
+    border: none; /* Sin borde */
+    border-radius: 4px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar el mouse */
+    font-size: 16px; /* Tamaño de fuente */
+    margin-top: 10px; /* Espaciado superior */
+}
+
+/* Efecto hover para el botón de admin */
+.login-form button#admin-login:hover {
+    background-color: #e0e0e0; /* Fondo gris más oscuro al pasar el mouse */
+}
