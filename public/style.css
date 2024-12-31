@@ -255,12 +255,13 @@ ion-icon[name="close-outline"] {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-    width: 300px;
+    width: 90%;
+    max-width: 400px;
     text-align: center;
 }
 
 .prompt-heading {
-    font-size: 20px;
+    font-size: 1.5rem;
     margin-bottom: 15px;
 }
 
@@ -272,6 +273,7 @@ ion-icon[name="close-outline"] {
     border-radius: 5px;
     background: rgba(255, 255, 255, 0.1);
     color: var(--elem-text-color);
+    font-size: 1rem;
 }
 
 .prompt button {
@@ -283,10 +285,23 @@ ion-icon[name="close-outline"] {
     color: white;
     cursor: pointer;
     transition: background 0.3s;
+    font-size: 1rem;
 }
 
 .prompt button:hover {
     background: var(--red-color);
+}
+
+/* Estilo para las solicitudes de ingreso */
+.user-request {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+}
+
+.user-request button {
+    flex: 1;
+    margin: 0 5px;
 }
 
 @font-face {
