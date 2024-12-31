@@ -247,6 +247,8 @@ ion-icon[name="close-outline"] {
     left: 0;
     width: 100vw;
     z-index: 10;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .prompt {
@@ -469,4 +471,20 @@ footer {
     border: 2px solid #4BB543; /* Borde verde */
     font-weight: bold; /* Texto en negrita */
     transition: background-color 0.3s, color 0.3s; /* Transición suave */
+}
+
+/* Media Queries para mejorar la responsividad */
+@media (max-width: 600px) {
+    .prompt {
+        width: 95%; /* Ancho más pequeño en pantallas pequeñas */
+    }
+
+    .prompt-heading {
+        font-size: 1.2rem; /* Tamaño de fuente más pequeño */
+    }
+
+    .prompt input,
+    .prompt button {
+        font-size: 0.9rem; /* Tamaño de fuente más pequeño */
+    }
 }
