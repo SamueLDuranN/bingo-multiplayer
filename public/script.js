@@ -165,3 +165,49 @@ socket.on("host-logout", (msg) => {
 socket.on("winner-announcement", (username) => {
     popup(username, "¡Ha ganado el juego!"); // Usando la función popup que ya tienes
 });
+
+// Escuchar la notificación de un usuario esperando
+socket.on("user-waiting", (username) => {
+    // Mostrar la solicitud de ingreso al administrador
+    const userRequest = document.createElement("div");
+    userRequest.textContent = `${username} está esperando para unirse.`;
+    
+    const acceptButton = document.createElement("button");
+    acceptButton.textContent = "Aceptar";
+    acceptButton.onclick = () => {
+        socket.emit("accept-user", username, roomId); // Emitir evento para aceptar al usuario
+        userRequest.remove(); // Eliminar la solicitud de la interfaz
+    };
+
+    const rejectButton = document.createElement("button");
+    rejectButton.textContent = "Rechazar";
+    rejectButton.onclick = () => {
+        socket.emit("reject-user", username, roomId); // Emitir evento para rechazar al usuario
+        userRequest.remove(); // Eliminar la solicitud de la interfaz
+    };
+
+    userRequest.appendChild(acceptButton);
+    userRequest.appendChild(rejectButton);
+    document.body.appendChild(userRequest); // Agregar la solicitud a la interfaz
+});
+
+// Escuchar la notificación de que el usuario fue aceptado
+socket.on("user-accepted", (username) => {
+    alert(`${username} ha sido aceptado en la sala.`);
+});
+
+// Escuchar la notificación de que el usuario fue rechazado
+socket.on("user-rejected", (username) => {
+    alert(`${username} ha sido rechazado de la sala.`);
+});
+
+// Manejar el botón de "Iniciar Juego"
+document.querySelector(".start-game-btn").addEventListener("click", () => {
+    socket.emit("start-game", roomId); // Emitir evento para iniciar el juego
+});
+
+// Escuchar el evento de que el juego ha comenzado
+socket.on("game-started", () => {
+    // Aquí puedes agregar la lógica para mostrar la interfaz del juego
+    alert("El juego ha comenzado.");
+});
