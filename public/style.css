@@ -236,82 +236,89 @@ ion-icon[name="close-outline"] {
 /* CSS for prompt */
 
 .prompt-outer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    background-color: rgba(32, 49, 91, 0.9);
-    border-radius: 15px;
-    padding: 30px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
-    width: 90%; /* Ancho responsivo */
-    max-width: 400px; /* Ancho máximo */
-}
-
-/* Encabezado del prompt */
-.prompt-heading {
-    display: flex;
     align-items: center;
-    color: #ffffff;
-    font-size: 1.8em;
-    margin-bottom: 20px;
+    flex-flow: column;
+    box-shadow: inset 72px 10px 97px -52px rgba(12, 214, 97, 0.6);
 }
-
-/* Estilo para el formulario del prompt */
 .prompt {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
+    width: 92%;
 }
 
-/* Estilo para los inputs */
+.prompt-outer > .prompt-heading > span {
+    color: var(--green-color);
+}
+
+.prompt-heading {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16pt;
+    font-weight: bold;
+    position: relative;
+    top: 0;
+    left: 4%;
+    margin-top: 4px;
+    align-self: flex-start;
+}
+
 .username-input,
 .room-id-input {
-    margin-bottom: 20px;
+    margin-top: 1vh;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column;
 }
 
-label {
-    color: #ffffff;
-    margin-bottom: 5px;
+.username-input > span,
+.room-id-input > span {
+    align-self: flex-start;
+    font-weight: 600;
+    font-size: 12pt;
+}
+
+ion-icon[name="terminal-outline"] {
+    color: var(--green-color);
+}
+
+.room-id-input {
+    margin-top: 1%;
+}
+
+.submit-btn {
+    display: block;
+    margin-top: 2vh;
+    margin-bottom: 2%;
+    outline: none;
+    background: rgba(96, 198, 137, 0.5);
+    padding: 5px;
+    border-radius: 6px;
+    color: var(--green-color);
+    border: 1px solid var(--green-color);
+    font-size: 12pt;
     font-weight: bold;
 }
 
-input {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background-color: rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    font-size: 1em;
-    transition: background-color 0.3s, border 0.3s;
-}
+/* As outer-prompt's width is 88% of 100vw i.e. 88vw. Therefore, the width of prompt which is 92% of outer-prompt's width will be 92/100 * 88vw = 80.96vw ~ 80 vw; */
 
-input:focus {
-    background-color: rgba(255, 255, 255, 0.4);
+.username-input > input,
+.room-id-input > input {
+    width: 80.96vw;
+    margin-top: 4px;
+    padding: 6px;
     outline: none;
-    border: 2px solid #60c689; /* Color de borde al enfocar */
+    border: 1px solid #f8f8f8;
+    background-color: var(--elem-bg-color);
+    color: var(--elem-text-color);
+    transition: all 0.5s;
+    border-radius: 6px;
+    font-size: 11pt;
 }
 
-/* Estilo para el botón de envío */
-.submit-btn {
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background-color: #60c689;
-    color: #ffffff;
-    font-size: 1.2em;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
-}
-
-.submit-btn:hover {
-    background-color: #4bbf6a; /* Color de fondo al pasar el mouse */
-    transform: scale(1.05); /* Efecto de aumento */
+.username-input > input:focus,
+.room-id-input > input:focus {
+    border: 2px solid var(--green-color);
 }
 
 @font-face {
@@ -470,13 +477,4 @@ footer {
 .text {
     font-weight: bold;
     font-size: 4vmin;
-}
-
-/* Estilo para las celdas marcadas */
-.cells.marked {
-    background-color: rgba(96, 198, 137, 0.5); /* Fondo diferente */
-    color: #ffffff; /* Texto blanco */
-    border: 2px solid #4BB543; /* Borde verde */
-    font-weight: bold; /* Texto en negrita */
-    transition: background-color 0.3s, color 0.3s; /* Transición suave */
 }

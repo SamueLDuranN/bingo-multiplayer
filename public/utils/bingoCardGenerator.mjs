@@ -13,11 +13,11 @@ function shuffledArray(array) {
 // Function to divide the main array into groups for each letter in BINGO
 export const divideIntoGroups = () => {
     return [
-        shuffledArray(array.slice(0, 15)), // B
-        shuffledArray(array.slice(15, 30)), // I
-        shuffledArray(array.slice(30, 45)), // N
-        shuffledArray(array.slice(45, 60)), // G
-        shuffledArray(array.slice(60, 75)), // O
+        shuffledArray(array.slice(0, 75)), // B
+        shuffledArray(array.slice(0, 75)), // I
+        shuffledArray(array.slice(0, 75)), // N
+        shuffledArray(array.slice(0, 75)), // G
+        shuffledArray(array.slice(0, 75)), // O
     ];
 }
 
