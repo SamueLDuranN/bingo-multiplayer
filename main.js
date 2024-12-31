@@ -58,6 +58,30 @@ io.on("connection", (socket) => {
         roomData.inGamePlayers[socket.id] = username;
     });
 
+    socket.on("create-room", (roomId) => {
+        // Verificar si el usuario ya es el host de otra sala
+        if (users[roomId]) {
+            socket.emit("room-exists", "La sala ya existe.");
+            return;
+        }
+
+        // Crear la sala y asignar el host
+        users[roomId] = {
+            players: {},
+            inGamePlayers: {},
+            winners: {},
+            lossers: {},
+            host: {
+                socketID: socket.id,
+                username: socket.username, // Asegúrate de que el nombre de usuario esté definido
+            },
+            gameStarted: false,
+        };
+
+        socket.join(roomId);
+        socket.emit("room-created", roomId);
+    });
+
     // Sends value gain from the host to all the users in room
     socket.on("value-send", (num, text, room) => {
         socket.broadcast.to(room).emit("value-recive", num, text, users[room]);
@@ -175,6 +199,18 @@ io.on("connection", (socket) => {
                 }
             }
         });
+    });
+
+    socket.on("start-game", (roomId) => {
+        const roomData = users[roomId];
+        if (roomData.host.socketID !== socket.id) {
+            socket.emit("not-host", "Solo el host puede iniciar el juego.");
+            return;
+        }
+
+        // Iniciar el juego
+        roomData.gameStarted = true;
+        io.to(roomId).emit("game-started");
     });
 });
 
