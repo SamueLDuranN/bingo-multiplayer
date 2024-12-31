@@ -106,12 +106,7 @@ io.on("connection", (socket) => {
             roomData.lossers[lastPlayerId] =
                 roomData.inGamePlayers[lastPlayerId];
             delete roomData.inGamePlayers[lastPlayerId];
-
-            // Emit the game result to all players
-            io.to(room).emit("game-result", {
-                winner: playerData,
-                loser: roomData.lossers[lastPlayerId],
-            });
+            io.to(room).emit("game-ended", roomData);
         }
 
         // Notify the room about the winner

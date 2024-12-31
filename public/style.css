@@ -480,29 +480,3 @@ footer {
     font-weight: bold; /* Texto en negrita */
     transition: background-color 0.3s, color 0.3s; /* Transición suave */
 }
-
-.result-window {
-    background-color: rgba(32, 49, 91, 0.9);
-    border-radius: 15px;
-    padding: 20px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.7);
-    color: #ffffff;
-}
-
-.result-window h2 {
-    text-align: center;
-}
-
-.result-window h3 {
-    margin-top: 20px;
-}
-
-.result-window ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.result-window li {
-    margin: 10px 0;
-    font-size: 1.2em;
-}
