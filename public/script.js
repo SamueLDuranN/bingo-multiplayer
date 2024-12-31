@@ -69,9 +69,11 @@ document.querySelector(".admin-submit-btn").addEventListener("click", () => {
     if (adminUsername === "VerhalenReal" && adminPassword === "verhalrial") {
         alert("Acceso como administrador concedido.");
         // Aquí puedes agregar la lógica para permitir la creación de salas
-        // Por ejemplo, podrías redirigir al usuario a la sala o iniciar el juego directamente
         socket.emit("create-room", roomId); // Emitir evento para crear sala
-        // Redirigir o mostrar la interfaz del juego
+        // Ocultar el formulario de administrador
+        document.querySelector(".admin-prompt-outer").style.display = "none";
+        // Mostrar la interfaz del juego o redirigir al usuario a la sala
+        // Puedes agregar aquí la lógica para mostrar la sala o el juego
     } else {
         alert("Credenciales de administrador incorrectas.");
     }
