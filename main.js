@@ -15,6 +15,7 @@ app.use(express.static("public")); // Servir archivos estáticos
 
 io.on("connection", (socket) => {
     console.log("Nuevo usuario conectado:", socket.id);
+    const HOST_USERNAME = "Samu"; // Cambia esto al nombre de usuario del host
 
     socket.on("join-room", (username, roomId) => {
         if (!users[roomId]) {
@@ -36,7 +37,17 @@ io.on("connection", (socket) => {
             socket.emit("failed-to-join-room", username, "El juego ya ha comenzado.");
             return;
         }
-
+        
+         // Si el usuario es el host, permitir la creación de la sala
+         if (username === HOST_USERNAME && !roomData.host) {
+            roomData.host = { username, socketID: socket.id };
+            socket.join(roomId);
+            socket.emit("room-created", roomId); // Notificar al host que la sala fue creada
+        } else if (roomData.host) {
+            // Si la sala ya tiene un host, no permitir que otros la creen
+            socket.emit("failed-to-create-room", "La sala ya tiene un host.");
+            return;
+        }
         // Agregar el usuario a la lista de espera
         roomData.waitingPlayers[socket.id] = username; // Agregar a la lista de espera
         socket.join(roomId);
