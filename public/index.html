@@ -26,7 +26,7 @@
         <div class="prompt-outer">
             <div class="prompt-heading">
                 <ion-icon name="terminal-outline"></ion-icon>
-                <span>Registrate</span>
+                <span>Iniciar Sesión</span>
             </div>
             <div class="prompt">
                 <div class="username-input">
@@ -38,16 +38,37 @@
                         required
                     />
                 </div>
-                <div class="room-id-input">
-                    <span>SALA ID:</span>
+                <button class="submit-btn">Enviar Solicitud</button>
+                <button class="admin-btn">Ingresar como Administrador</button>
+            </div>
+        </div>
+
+        <!-- Formulario de administrador oculto -->
+        <div class="admin-prompt-outer" style="display: none;">
+            <div class="prompt-heading">
+                <ion-icon name="terminal-outline"></ion-icon>
+                <span>Iniciar Sesión como Administrador</span>
+            </div>
+            <div class="prompt">
+                <div class="admin-username-input">
+                    <span>USUARIO ADMIN:</span>
                     <input
-                        name="room-id"
+                        name="admin-username"
                         type="text"
-                        placeholder="Ingresa ID Sala"
+                        placeholder="Ingresa Usuario Admin"
                         required
                     />
                 </div>
-                <button class="submit-btn">Enviar</button>
+                <div class="admin-password-input">
+                    <span>CONTRASEÑA:</span>
+                    <input
+                        name="admin-password"
+                        type="password"
+                        placeholder="Ingresa Contraseña"
+                        required
+                    />
+                </div>
+                <button class="admin-submit-btn">Enviar Solicitud</button>
             </div>
         </div>
 

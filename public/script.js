@@ -54,9 +54,37 @@ resultCloseBtn.addEventListener("click", () => {
     resultScreenWrapper.style.display = "none";
 });
 
-// Handle the submission of the prompt
+// Manejar el botón de "Ingresar como Administrador"
+document.querySelector(".admin-btn").addEventListener("click", () => {
+    document.querySelector(".prompt-outer").style.display = "none"; // Ocultar el formulario de usuario
+    document.querySelector(".admin-prompt-outer").style.display = "inline-flex"; // Mostrar el formulario de administrador
+});
+
+// Manejar la solicitud de inicio de sesión de administrador
+document.querySelector(".admin-submit-btn").addEventListener("click", () => {
+    const adminUsername = document.querySelector('[name="admin-username"]').value.trim();
+    const adminPassword = document.querySelector('[name="admin-password"]').value.trim();
+
+    // Verificar credenciales de administrador
+    if (adminUsername === "VerhalenReal" && adminPassword === "verhalrial") {
+        alert("Acceso como administrador concedido.");
+        // Aquí puedes agregar la lógica para permitir la creación de salas
+    } else {
+        alert("Credenciales de administrador incorrectas.");
+    }
+});
+
+// Manejar la solicitud de inicio de sesión normal
 document.querySelector(".submit-btn").addEventListener("click", () => {
-    [username, roomId] = promptSubmit(promptOuter, startGameBtn, socket);
+    const username = document.querySelector('[name="username"]').value.trim();
+    if (!username) {
+        alert("El nombre de usuario no puede estar vacío.");
+        return;
+    }
+    // Aquí puedes agregar la lógica para enviar la solicitud de inicio de sesión
+    alert("Solicitud pendiente."); // Mensaje de solicitud pendiente
+    // Emitir la solicitud al servidor
+    socket.emit("join-room", username, roomId);
 });
 
 socket.on("sending-user-data", (usersRoom) => {
